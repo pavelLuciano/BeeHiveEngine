@@ -24,21 +24,21 @@ bool BeeHive::Init()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    window.self = glfwCreateWindow(window.width, window.height, "BeeHive", NULL, NULL);
-    if (!window.self)
+    Window::window = glfwCreateWindow(Window::width, Window::height, "BeeHive", NULL, NULL);
+    if (!Window::window)
     {
         std::cerr << "No se pudo crear la ventana" << std::endl;
         glfwTerminate();
         return false;
     };
-    glfwMakeContextCurrent(window.self);
+    glfwMakeContextCurrent(Window::window);
     glfwSwapInterval(1);
     //glfwSetFramebufferSizeCallback(window.self, framebuffer_size_callback);
     //glfwSetCursorPosCallback(window.self, mouse_callback);
     //glfwSetScrollCallback(window.self, scroll_callback);
 
     // tell GLFW to capture our mouse
-    glfwSetInputMode(window.self, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    glfwSetInputMode(Window::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     
     if (glewInit() != GLEW_OK) 
     {
@@ -46,7 +46,7 @@ bool BeeHive::Init()
         glfwTerminate();
         return false;
     }
-    glViewport(0, 0, window.width, window.height);
+    glViewport(0, 0, Window::width, Window::height);
     std::cout << "OpenGL iniciado correctamente\nVersion: " << glGetString(GL_VERSION) << std::endl;
     glEnable(GL_DEPTH_TEST);
 
@@ -56,7 +56,7 @@ bool BeeHive::Init()
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    //ImPlot::CreateContext();
+    ImPlot::CreateContext();
     //ImGuiIO& io = ImGui::GetIO(); (void)io;
     //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
@@ -67,6 +67,6 @@ bool BeeHive::Init()
     ImGui::StyleColorsDark();
     //ImGui::StyleColorsLight();
     // Setup Platform/Renderer backends
-    ImGui_ImplGlfw_InitForOpenGL(window.self, true);
+    ImGui_ImplGlfw_InitForOpenGL(Window::window, true);
     ImGui_ImplOpenGL3_Init();
 }

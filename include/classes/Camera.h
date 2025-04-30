@@ -3,6 +3,8 @@
 #include <Entity.h>
 class Camera: Entity
 {
-
+public:
+    Camera();
+    ~Camera();
 };
 #endif

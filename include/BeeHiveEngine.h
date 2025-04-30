@@ -6,6 +6,7 @@
 #include <backends/imgui_impl_opengl3.h>
 #include <backends/imgui_impl_glfw.h>
 #include <imgui.h>
+#include <implot.h>
 
 
 namespace BeeHive
@@ -15,30 +16,28 @@ namespace BeeHive
     class Clock
     {
     public:
-        double lastFrame;
-        double currentFrame;
+        static double lastFrame;
+        static double currentFrame;
 
-        double deltaTime();
-        void tick();
-    } clock;
+        static double deltaTime();
+        static void tick();
+    };
     class Window
     {
     public:
-        int width;
-        int height;
-        GLFWwindow* self;
-
-    } window;
+        static int width;
+        static int height;
+        static GLFWwindow* window;
+    };
     class Input
     {
 
-    } inputHandler;
+    };
 
     //Funciones que manejan el motor 
     bool Init();
     void Terminate();
     void UpdateFrame();
-
 };
 
 #endif
