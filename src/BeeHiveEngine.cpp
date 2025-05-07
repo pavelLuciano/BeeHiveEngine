@@ -1,7 +1,9 @@
 #include <BeeHiveEngine.h>
 #include <iostream>
 
-//Clase "Clock" para tener registros de los tiempos
+//CLOCK
+double BeeHive::Clock::lastFrame    = 0;
+double BeeHive::Clock::currentFrame = 0;
 double BeeHive::Clock::deltaTime()
 {
     return currentFrame - lastFrame;
@@ -11,6 +13,13 @@ void BeeHive::Clock::tick()
     lastFrame = currentFrame;
     currentFrame = glfwGetTime();
 }
+
+//WINDOW
+int BeeHive::Window::width          = 800;
+int BeeHive::Window::height         = 600;
+GLFWwindow* BeeHive::Window::window = nullptr;
+
+//INPUT
 
 //Funciones generales
 bool BeeHive::Init()
@@ -69,4 +78,14 @@ bool BeeHive::Init()
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(Window::window, true);
     ImGui_ImplOpenGL3_Init();
+}
+
+bool BeeHive::Terminate()
+{
+    ImPlot::DestroyContext();
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+    glfwDestroyWindow(Window::window);
+    glfwTerminate();
 }

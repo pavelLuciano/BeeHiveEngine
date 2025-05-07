@@ -4,10 +4,12 @@
 #include <EntityAttribute.h>
 class Entity
 {
-public:
+protected:
     std::vector<EntityAttribute*> Attributes; 
     Entity();
     ~Entity();
+
+    
 
 private:
 

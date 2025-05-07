@@ -22,11 +22,12 @@ IMGUI_SRC = \
     $(IMGUI_DIR)/backends/imgui_impl_opengl3.cpp \
 # Archivos de Implot
 IMPLOT_DIR = dependencies/implot
-IMPLOT_SRC = \
+IMPLOT_SRC = 
     $(IMPLOT_DIR)/implot.cpp \
     $(IMPLOT_DIR)/implot_items.cpp \
 	$(IMPLOT_DIR)/implot_demo.cpp 
 
+GLM_DIR = dependencies/glm
 # Directorios de inclusión
 INCLUDES = -Iinclude -I$(IMGUI_DIR) -I$(IMGUI_DIR)/backends -I$(IMPLOT_DIR)
 

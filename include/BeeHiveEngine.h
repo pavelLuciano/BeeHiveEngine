@@ -8,7 +8,6 @@
 #include <imgui.h>
 #include <implot.h>
 
-
 namespace BeeHive
 {
     //Elementos que se encargan de valores globales generales
@@ -16,11 +15,17 @@ namespace BeeHive
     class Clock
     {
     public:
-        static double lastFrame;
-        static double currentFrame;
-
         static double deltaTime();
         static void tick();
+
+        Clock()                        = delete;
+        Clock(const Clock&)            = delete;
+        Clock(Clock&&)                 = delete;
+        Clock& operator=(const Clock&) = delete;
+        Clock& operator=(Clock&&)      = delete;
+    private:
+        static double lastFrame;
+        static double currentFrame;
     };
     class Window
     {
@@ -29,6 +34,7 @@ namespace BeeHive
         static int height;
         static GLFWwindow* window;
     };
+    
     class Input
     {
 
@@ -36,8 +42,9 @@ namespace BeeHive
 
     //Funciones que manejan el motor 
     bool Init();
-    void Terminate();
-    void UpdateFrame();
+    bool Terminate();
+    void NewFrame();
+    void Render();
 };
 
 #endif

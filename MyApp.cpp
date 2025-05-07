@@ -1,13 +1,28 @@
 #include <iostream>
 #include <BeeHiveEngine.h>
 
-
-double BeeHive::Clock::lastFrame = 0.0;
-double BeeHive::Clock::currentFrame = 0.0;
 int BeeHive::Window::width = 400;
 int BeeHive::Window::height = 400;
 GLFWwindow* BeeHive::Window::window = nullptr;
 
+
+int main(int argc, char** argv)
+{
+    BeeHive::Init();
+
+
+
+    
+    while(!glfwWindowShouldClose(BeeHive::Window::window))
+    {
+
+    }
+
+    BeeHive::Terminate();
+
+}
+
+/*
 int main (int argc, char* argv[])
 {
     glfwInit();
@@ -31,13 +46,11 @@ int main (int argc, char* argv[])
         ImGui::NewFrame();
 
         //Mostrar Demo IMGUI
-        
-        ImGui::ShowDemoWindow();
-
+        //ImGui::ShowDemoWindow();
         // Mostrar demo
-        ImGui::Begin("ImPlot Demo");
-        ImPlot::ShowDemoWindow();
-        ImGui::End();
+        //ImGui::Begin("ImPlot Demo");
+        //ImPlot::ShowDemoWindow();
+        //ImGui::End();
 
         ImGui::Render();
         int display_w, display_h;
@@ -59,5 +72,5 @@ int main (int argc, char* argv[])
     glfwTerminate();
 
     return 0;
-}
+}*/
 
