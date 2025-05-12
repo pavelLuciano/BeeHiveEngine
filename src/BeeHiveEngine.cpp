@@ -21,6 +21,9 @@ GLFWwindow* BeeHive::Window::window = NULL;
 
 //INPUT
 
+//GRAPHIC
+Shader BeeHive::Graphic::defaultShader;
+
 //Funciones generales
 bool BeeHive::Init()
 {
@@ -59,6 +62,11 @@ bool BeeHive::Init()
     std::cout << "OpenGL iniciado correctamente\nVersion: " << glGetString(GL_VERSION) << std::endl;
     glEnable(GL_DEPTH_TEST);
 
+
+    //
+    // BEEHIVE ENGINE
+    //
+    Graphic::defaultShader.loadFile(DEFAULT_VERTEX_SHADER, DEFAULT_FRAGMENT_SHADER);
     
 
     //
@@ -80,6 +88,8 @@ bool BeeHive::Init()
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(Window::window, true);
     ImGui_ImplOpenGL3_Init();
+
+
 
     return true;
 }
@@ -111,7 +121,7 @@ void BeeHive::Render()
     int display_w, display_h;
     glfwGetFramebufferSize(BeeHive::Window::window, &display_w, &display_h);
     glViewport(0, 0, display_w, display_h);
-    glClearColor(0.5f, 0.0f, 0.5f, 1.0f);
+    glClearColor(0.1f, 0.2f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     //ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 

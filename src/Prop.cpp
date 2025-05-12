@@ -1,5 +1,6 @@
 #include <Prop.h>
-
+#include <BeeHiveEngine.h>
+#include <glm/gtc/matrix_transform.hpp>
 Prop::Prop()
 {
     transform = new Transform();
@@ -23,5 +24,20 @@ Prop::~Prop()
 }
 void Prop::draw() const
 {
-    model->draw();
+    BeeHive::Graphic::defaultShader.use();
+    //hay que setear projeccion y perspectiva?
+    draw(BeeHive::Graphic::defaultShader);
+}
+void Prop::draw(Shader& shader) const
+{
+    //shader.use();
+    glm::mat4 transMatrix = glm::mat4(1.0f);
+    //rotacion cuidado con el orden;
+    transMatrix = glm::rotate(transMatrix, transform->rotation.head, glm::vec3(0,1,0));
+    transMatrix = glm::rotate(transMatrix, transform->rotation.pitch, glm::vec3(1,0,0));
+    transMatrix = glm::rotate(transMatrix, transform->rotation.roll, glm::vec3(0,0,1));
+
+    transMatrix = glm::translate(transMatrix, transform->pos);
+    //shader.setMat4("model", transMatrix);
+    ((Mesh*)model)->draw(shader);
 }

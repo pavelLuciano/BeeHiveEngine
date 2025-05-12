@@ -1,10 +1,10 @@
 #ifndef _I_DRAWABLE_H_
 #define _I_DRAWABLE_H_
-#define DEFAULT_FRAGMENT_SHADER "./resources/shaders/defaultFragment.glsl"
-#define DEFAULT_VERTEX_SHADER   "./resources/shaders/defaultVertex.glsl"
+#include <Shader.h>
 class IDrawable
 {
 public:
     virtual void draw() const = 0;
+    virtual void draw(Shader&) const = 0;
 };
 #endif

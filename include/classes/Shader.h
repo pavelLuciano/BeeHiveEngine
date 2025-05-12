@@ -10,8 +10,10 @@ public:
     GLuint id;
 
     Shader(const std::string&, const std::string&);
+    Shader();
     ~Shader();
     void use() const;
+    void loadFile(const std::string&, const std::string&);
     void setMat4(const std::string&, const glm::mat4&) const;
     void setMat3(const std::string&, const glm::mat3&) const;
     void setMat2(const std::string&, const glm::mat2&) const;
@@ -28,7 +30,7 @@ public:
 private:
     GLuint compileShader(int,const std::string& );
     GLuint compileShaderProgram(GLuint, GLuint);
-    void checkCompileErrors();
+    void checkCompileErrors(GLuint shader, std::string type);
     std::string readFile(const std::string&) const;
 };
 #endif

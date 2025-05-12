@@ -2,7 +2,7 @@
 
 Transform::Transform()
 {
-    pos =         glm::vec3(0.0f);
+    pos =         glm::vec3(0.0f, 0.0f, 0.0f);
     scale =       glm::vec3(1.0f);
     rotation =    {0.0f, 0.0f, 0.0f};
     xAxis_Local = glm::vec3(1.0f, 0.0f, 0.0f);

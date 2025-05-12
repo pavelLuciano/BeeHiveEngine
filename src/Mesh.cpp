@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <GL/glew.h>
+#include <iostream>
 
 Mesh::Mesh()
 {
@@ -23,9 +24,13 @@ void Mesh::draw() const
     glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
+void Mesh::draw(Shader& shader) const
+{
+    draw();
+}
 void Mesh::setupMesh()
 {
-        glGenVertexArrays(1, &VAO);
+    glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
 
@@ -116,6 +121,7 @@ void Mesh::loadFile(const std::string& filePath)
     for (long unsigned int i = 0; i< vertices.size(); i++)
     {
         this->vertices.push_back({vertices[i], colors[i], glm::vec2(0.0f,0.0f)});
+        //std::cout << vertices[i].x<< " " << vertices[i].y << " " << vertices[i].z << std::endl;
     }
     vertex_data_file.close();
 }

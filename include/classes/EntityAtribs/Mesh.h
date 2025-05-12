@@ -27,12 +27,12 @@ public:
     Mesh(const std::string&);
     ~Mesh();
 
-    void draw() const override;
     void setupMesh(const std::string&);
     void setupMesh();
     void loadFile(const std::string&);
 
     void draw() const override;
+    void draw(Shader&) const override;
 private:
     unsigned int EBO, VBO;
 };

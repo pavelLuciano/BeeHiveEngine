@@ -1,16 +1,23 @@
 #include <iostream>
 #include <BeeHiveEngine.h>
 #include <Prop.h>
+#include <Camera.h>
 
 int main(int argc, char** argv)
 {
     BeeHive::Init();
     Prop prop("./resources/assets/models/box.shape");
+    Camera camera;
+
+
 
     while(!glfwWindowShouldClose(BeeHive::Window::window))
     {
         BeeHive::NewFrame();
-        prop.draw();
+
+        BeeHive::Graphic::defaultShader.use();
+
+        //prop.draw(BeeHive::Graphic::defaultShader);
         BeeHive::Render();
     }
     BeeHive::Terminate();

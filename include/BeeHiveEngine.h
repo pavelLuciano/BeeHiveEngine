@@ -8,6 +8,11 @@
 #include <imgui.h>
 #include <implot.h>
 
+#include <Shader.h>
+
+#define DEFAULT_FRAGMENT_SHADER "./resources/shaders/defaultFragment.glsl"
+#define DEFAULT_VERTEX_SHADER   "./resources/shaders/defaultVertex.glsl"
+
 namespace BeeHive
 {
     //Elementos que se encargan de valores globales generales
@@ -38,6 +43,12 @@ namespace BeeHive
     class Input
     {
 
+    };
+
+    class Graphic
+    {
+    public:
+        static Shader defaultShader;
     };
 
     //Funciones que manejan el motor 

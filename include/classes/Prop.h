@@ -11,11 +11,13 @@ class Prop: Entity, IDrawable
 {
 private:
     Transform* transform;
+public:
     IDrawable* model;
 public:
     Prop();
     Prop(const std::string&);
     ~Prop();
     void draw() const override;
+    void draw(Shader&) const override;
 };
 #endif
