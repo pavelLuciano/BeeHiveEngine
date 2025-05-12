@@ -17,7 +17,7 @@ void BeeHive::Clock::tick()
 //WINDOW
 int BeeHive::Window::width          = 800;
 int BeeHive::Window::height         = 600;
-GLFWwindow* BeeHive::Window::window = nullptr;
+GLFWwindow* BeeHive::Window::window = NULL;
 
 //INPUT
 
@@ -59,6 +59,8 @@ bool BeeHive::Init()
     std::cout << "OpenGL iniciado correctamente\nVersion: " << glGetString(GL_VERSION) << std::endl;
     glEnable(GL_DEPTH_TEST);
 
+    
+
     //
     // IMGUI & IMPLOT
     //
@@ -78,8 +80,9 @@ bool BeeHive::Init()
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(Window::window, true);
     ImGui_ImplOpenGL3_Init();
-}
 
+    return true;
+}
 bool BeeHive::Terminate()
 {
     ImPlot::DestroyContext();
@@ -88,4 +91,29 @@ bool BeeHive::Terminate()
     ImGui::DestroyContext();
     glfwDestroyWindow(Window::window);
     glfwTerminate();
+    return true;
+}
+void BeeHive::NewFrame()
+{
+    Clock::tick();
+    glfwPollEvents();
+    /*
+    if (glfwGetWindowAttrib(BeeHive::Window::window, GLFW_ICONIFIED) != 0)
+    {
+        ImGui_ImplGlfw_Sleep(10);
+        continue;
+    }*/
+}
+
+void BeeHive::Render()
+{
+    //ImGui::Render();
+    int display_w, display_h;
+    glfwGetFramebufferSize(BeeHive::Window::window, &display_w, &display_h);
+    glViewport(0, 0, display_w, display_h);
+    glClearColor(0.5f, 0.0f, 0.5f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    //ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    glfwSwapBuffers(BeeHive::Window::window);
 }

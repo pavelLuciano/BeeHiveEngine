@@ -7,11 +7,10 @@ class Entity
 protected:
     std::vector<EntityAttribute*> Attributes; 
     Entity();
-    ~Entity();
-
-    
-
+    virtual ~Entity();
 private:
-
+    static unsigned int entityIDCount;
+public:
+    unsigned int entityID;
 };
 #endif

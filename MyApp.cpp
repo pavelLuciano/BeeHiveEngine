@@ -1,25 +1,19 @@
 #include <iostream>
 #include <BeeHiveEngine.h>
-
-int BeeHive::Window::width = 400;
-int BeeHive::Window::height = 400;
-GLFWwindow* BeeHive::Window::window = nullptr;
-
+#include <Prop.h>
 
 int main(int argc, char** argv)
 {
     BeeHive::Init();
+    Prop prop("./resources/assets/models/box.shape");
 
-
-
-    
     while(!glfwWindowShouldClose(BeeHive::Window::window))
     {
-
+        BeeHive::NewFrame();
+        prop.draw();
+        BeeHive::Render();
     }
-
     BeeHive::Terminate();
-
 }
 
 /*
