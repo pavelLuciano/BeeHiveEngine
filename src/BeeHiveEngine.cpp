@@ -26,36 +26,29 @@ Shader BeeHive::Graphic::defaultShader;
 
 //Funciones generales
 bool BeeHive::Init()
-{
-    // GLFW & GLEW
-    if (!glfwInit())
-    {
-        std::cerr << "ERROR::NO_SE_PUDO_INICIAR_GLFW" << std::endl;
-        return false;
-    }
+{ 
+    glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    Window::window = glfwCreateWindow(Window::width, Window::height, "BeeHive", NULL, NULL);
+    Window::window = glfwCreateWindow(Window::width, Window::height, "BeeHive", nullptr, nullptr);
     if (!Window::window)
     {
-        std::cerr << "No se pudo crear la ventana" << std::endl;
+        std::cerr << "Error al crear la ventana\n";
         glfwTerminate();
         return false;
-    };
+    }
     glfwMakeContextCurrent(Window::window);
     glfwSwapInterval(1);
     //glfwSetFramebufferSizeCallback(window.self, framebuffer_size_callback);
     //glfwSetCursorPosCallback(window.self, mouse_callback);
     //glfwSetScrollCallback(window.self, scroll_callback);
-
     // tell GLFW to capture our mouse
     glfwSetInputMode(Window::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-    
-    if (glewInit() != GLEW_OK) 
+    //glewExperimental = GL_TRUE; // no se para que sirve esta linea
+    if (glewInit() != GLEW_OK)
     {
-        std::cerr << "ERROR::NO_SE_PUDO_INICIAR_GLEW" << std::endl;
-        glfwTerminate();
+        std::cerr << "Error al inicializar GLEW\n";
         return false;
     }
     glViewport(0, 0, Window::width, Window::height);
@@ -67,8 +60,6 @@ bool BeeHive::Init()
     // BEEHIVE ENGINE
     //
     Graphic::defaultShader.loadFile(DEFAULT_VERTEX_SHADER, DEFAULT_FRAGMENT_SHADER);
-    
-
     //
     // IMGUI & IMPLOT
     //
@@ -90,6 +81,7 @@ bool BeeHive::Init()
     ImGui_ImplOpenGL3_Init();
 
 
+    std::cout << Window::window << std::endl;
 
     return true;
 }
@@ -121,7 +113,7 @@ void BeeHive::Render()
     int display_w, display_h;
     glfwGetFramebufferSize(BeeHive::Window::window, &display_w, &display_h);
     glViewport(0, 0, display_w, display_h);
-    glClearColor(0.1f, 0.2f, 0.1f, 1.0f);
+    glClearColor(0.0f, 0.2f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     //ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 

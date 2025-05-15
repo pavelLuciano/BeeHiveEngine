@@ -1,6 +1,7 @@
 #include <Prop.h>
 #include <BeeHiveEngine.h>
 #include <glm/gtc/matrix_transform.hpp>
+#include <iostream>
 Prop::Prop()
 {
     transform = new Transform();
@@ -39,5 +40,11 @@ void Prop::draw(Shader& shader) const
 
     transMatrix = glm::translate(transMatrix, transform->pos);
     //shader.setMat4("model", transMatrix);
-    ((Mesh*)model)->draw(shader);
+    model->draw(shader);
+}
+
+void Prop::logData()
+{
+    ((Mesh*)model)->logData();
+    std::cout <<( ((Mesh*)model)-> VAO )<< std::endl;
 }

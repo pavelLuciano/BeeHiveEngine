@@ -30,6 +30,7 @@ public:
     void setupMesh(const std::string&);
     void setupMesh();
     void loadFile(const std::string&);
+    void logData();
 
     void draw() const override;
     void draw(Shader&) const override;

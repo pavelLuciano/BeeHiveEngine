@@ -19,5 +19,7 @@ public:
     ~Prop();
     void draw() const override;
     void draw(Shader&) const override;
+
+    void logData();
 };
 #endif

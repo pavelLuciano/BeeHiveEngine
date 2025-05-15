@@ -11,6 +11,7 @@ Mesh::Mesh()
 Mesh::Mesh(const std::string& filePath)
 {
     setupMesh(filePath);
+    std::cout << VAO << std::endl;
 }
 Mesh::~Mesh()
 {
@@ -121,7 +122,14 @@ void Mesh::loadFile(const std::string& filePath)
     for (long unsigned int i = 0; i< vertices.size(); i++)
     {
         this->vertices.push_back({vertices[i], colors[i], glm::vec2(0.0f,0.0f)});
-        //std::cout << vertices[i].x<< " " << vertices[i].y << " " << vertices[i].z << std::endl;
     }
     vertex_data_file.close();
+}
+void Mesh::logData()
+{
+    for (Vertex v: vertices) std::cout << v.position.x << " " << v.position.y << " " << v.position.z << "|" << v.color.r << " " << v.color.g << " " << v.color.b << std::endl;
+    for (unsigned int i = 0; i < indices.size(); )
+    {
+        std::cout << indices[i++] << " " << indices[i++] << " " << indices[i++] << std::endl;
+    }
 }
