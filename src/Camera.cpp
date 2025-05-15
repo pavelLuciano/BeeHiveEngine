@@ -1,14 +1,19 @@
 #include <Camera.h>
+#include <BeeHiveEngine.h>
 #include <glm/gtc/matrix_transform.hpp>
+#include <iostream>
 Camera::Camera()
 {
     projection = PERSPECTIVE;
     FOV = 60.0f;
     transform = new Transform();
+    transform->TranslateZTo(-3.0f);
+    std::cout <<"["<< entityID <<"]" << "Camera Creada" << std::endl;
 }
 Camera::~Camera()
 {
     delete transform;
+    std::cout <<"["<< entityID <<"]" << "Camera Destruida" << std::endl;
 }
 void Camera::setProjection(Projection _projection)
 {

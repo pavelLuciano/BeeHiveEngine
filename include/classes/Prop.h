@@ -9,9 +9,8 @@
 
 class Prop: Entity, IDrawable
 {
-private:
-    Transform* transform;
 public:
+    Transform* transform;
     IDrawable* model;
 public:
     Prop();

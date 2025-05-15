@@ -7,6 +7,7 @@ Prop::Prop()
     transform = new Transform();
     model = NULL;
     Attributes.push_back((EntityAttribute*)transform);
+    std::cout <<"["<< entityID <<"]" << "Prop Creado" << std::endl;
 }
 Prop::Prop(const std::string& filePath)
 {
@@ -16,12 +17,15 @@ Prop::Prop(const std::string& filePath)
     Mesh* mod = new Mesh(filePath);
     model = (IDrawable*) mod;
     Attributes.push_back((EntityAttribute*) mod);
+    std::cout <<"["<< entityID <<"]" << "Prop Creado" << std::endl;
 }
 Prop::~Prop()
 {
     //como hay que borrar idrawable?
     //delete transform;
     //delete model; ?
+
+    std::cout <<"["<< entityID <<"]" << "Prop Destruido" << std::endl;
 }
 void Prop::draw() const
 {
@@ -33,13 +37,13 @@ void Prop::draw(Shader& shader) const
 {
     //shader.use();
     glm::mat4 transMatrix = glm::mat4(1.0f);
+    transMatrix = glm::translate(transMatrix, transform->pos);
     //rotacion cuidado con el orden;
     transMatrix = glm::rotate(transMatrix, transform->rotation.head, glm::vec3(0,1,0));
     transMatrix = glm::rotate(transMatrix, transform->rotation.pitch, glm::vec3(1,0,0));
     transMatrix = glm::rotate(transMatrix, transform->rotation.roll, glm::vec3(0,0,1));
-
-    transMatrix = glm::translate(transMatrix, transform->pos);
-    //shader.setMat4("model", transMatrix);
+    //sclae
+    shader.setMat4("model", transMatrix);
     model->draw(shader);
 }
 

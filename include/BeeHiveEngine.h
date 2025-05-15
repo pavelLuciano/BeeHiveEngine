@@ -37,6 +37,8 @@ namespace BeeHive
     public:
         static int width;
         static int height;
+        static int frameBufferSizeWidth;
+        static int frameBufferSizeHeight;
         static GLFWwindow* window;
     };
     

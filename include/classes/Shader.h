@@ -4,6 +4,8 @@
 #include <glm/glm.hpp>
 #include <string>
 #include <vector>
+
+#include <Camera.h>
 class Shader
 {
 public:
@@ -26,6 +28,8 @@ public:
     void setFloat(const std::string&,float) const;
     void setInt(const std::string&, int) const;
     void setBool(const std::string&, bool) const;
+
+    void setCamera(Camera&);
 
 private:
     GLuint compileShader(int,const std::string& );

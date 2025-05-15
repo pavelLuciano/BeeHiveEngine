@@ -11,7 +11,7 @@ Mesh::Mesh()
 Mesh::Mesh(const std::string& filePath)
 {
     setupMesh(filePath);
-    std::cout << VAO << std::endl;
+    //std::cout << VAO << std::endl;
 }
 Mesh::~Mesh()
 {

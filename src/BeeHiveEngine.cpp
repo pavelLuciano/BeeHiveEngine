@@ -15,8 +15,10 @@ void BeeHive::Clock::tick()
 }
 
 //WINDOW
-int BeeHive::Window::width          = 800;
-int BeeHive::Window::height         = 600;
+int BeeHive::Window::width                 = 800;
+int BeeHive::Window::height                = 600;
+int BeeHive::Window::frameBufferSizeWidth  = 0;
+int BeeHive::Window::frameBufferSizeHeight = 0;
 GLFWwindow* BeeHive::Window::window = NULL;
 
 //INPUT
@@ -51,6 +53,7 @@ bool BeeHive::Init()
         std::cerr << "Error al inicializar GLEW\n";
         return false;
     }
+
     glViewport(0, 0, Window::width, Window::height);
     std::cout << "OpenGL iniciado correctamente\nVersion: " << glGetString(GL_VERSION) << std::endl;
     glEnable(GL_DEPTH_TEST);
@@ -81,16 +84,17 @@ bool BeeHive::Init()
     ImGui_ImplOpenGL3_Init();
 
 
-    std::cout << Window::window << std::endl;
+    //std::cout << Window::window << std::endl;
 
     return true;
 }
 bool BeeHive::Terminate()
 {
-    ImPlot::DestroyContext();
+    glDeleteProgram(Graphic::defaultShader.id);
+    /*ImPlot::DestroyContext();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
+    ImGui::DestroyContext();*/
     glfwDestroyWindow(Window::window);
     glfwTerminate();
     return true;
@@ -99,6 +103,9 @@ void BeeHive::NewFrame()
 {
     Clock::tick();
     glfwPollEvents();
+
+    glClearColor(0.0f, 0.2f, 0.1f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     /*
     if (glfwGetWindowAttrib(BeeHive::Window::window, GLFW_ICONIFIED) != 0)
     {
@@ -110,12 +117,8 @@ void BeeHive::NewFrame()
 void BeeHive::Render()
 {
     //ImGui::Render();
-    int display_w, display_h;
-    glfwGetFramebufferSize(BeeHive::Window::window, &display_w, &display_h);
-    glViewport(0, 0, display_w, display_h);
-    glClearColor(0.0f, 0.2f, 0.1f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glfwGetFramebufferSize(Window::window, &Window::frameBufferSizeWidth, &Window::frameBufferSizeHeight);
+    glViewport(0, 0, Window::frameBufferSizeWidth, Window::frameBufferSizeHeight);
     //ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-    glfwSwapBuffers(BeeHive::Window::window);
+    glfwSwapBuffers(Window::window);
 }

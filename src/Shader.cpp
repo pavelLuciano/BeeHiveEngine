@@ -30,7 +30,7 @@ GLuint Shader::compileShader(int type, const std::string& shaderSource)
 {
     GLuint shader = glCreateShader(type);
     const char* cShaderSrc = shaderSource.c_str();
-    glShaderSource(shader, 1, &cShaderSrc, NULL);
+    glShaderSource(shader, 1, &cShaderSrc, nullptr);
 	glCompileShader(shader);
     return shader;
 }
@@ -175,4 +175,10 @@ void Shader::setBool(const std::string& name, bool value) const
         glGetUniformLocation(id, name.c_str()),
         (int) value
     );
+}
+
+void Shader::setCamera(Camera& _cam)
+{
+    setMat4("projection", _cam.getProjection());
+    setMat4("view",       _cam.getView());
 }
