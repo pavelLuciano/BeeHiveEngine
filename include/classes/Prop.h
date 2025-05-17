@@ -3,7 +3,7 @@
 #include <Entity.h>
 //atributes
 #include <Transform.h>
-#include <Mesh.h>
+#include <Model.h>
 //interfaces
 #include <IDrawable.h>
 

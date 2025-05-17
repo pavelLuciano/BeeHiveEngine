@@ -35,7 +35,7 @@ INCLUDES = -Iinclude -I$(IMGUI_DIR) -I$(IMGUI_DIR)/backends -I$(IMPLOT_DIR) -Iin
 CXXFLAGS = -Wall -std=c++17 $(INCLUDES)
 
 # Librerías a enlazar
-LIBS = -lGLEW -lglfw -lGL
+LIBS = -lGLEW -lglfw -lGL -lassimp
 
 # Carpeta de salida
 BIN = bin

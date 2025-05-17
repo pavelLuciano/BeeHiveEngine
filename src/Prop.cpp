@@ -7,17 +7,17 @@ Prop::Prop()
     transform = new Transform();
     model = NULL;
     Attributes.push_back((EntityAttribute*)transform);
-    std::cout <<"["<< entityID <<"]" << "Prop Creado" << std::endl;
+    std::cout <<"["<< entityID <<"] " << "Prop Creado" << std::endl;
 }
 Prop::Prop(const std::string& filePath)
 {
     transform = new Transform();
     Attributes.push_back((EntityAttribute*)transform);
     //la clase creada debe ser EntityAtribute e IDrawable al mismo tiempo
-    Mesh* mod = new Mesh(filePath);
+    Model* mod = new Model(filePath);
     model = (IDrawable*) mod;
     Attributes.push_back((EntityAttribute*) mod);
-    std::cout <<"["<< entityID <<"]" << "Prop Creado" << std::endl;
+    std::cout <<"["<< entityID <<"] " << "Prop Creado" << std::endl;
 }
 Prop::~Prop()
 {
@@ -25,7 +25,7 @@ Prop::~Prop()
     //delete transform;
     //delete model; ?
 
-    std::cout <<"["<< entityID <<"]" << "Prop Destruido" << std::endl;
+    std::cout <<"["<< entityID <<"] " << "Destruyendo Prop" << std::endl;
 }
 void Prop::draw() const
 {

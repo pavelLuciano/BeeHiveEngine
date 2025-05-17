@@ -6,17 +6,17 @@
 int main(int argc, char** argv)
 {
     BeeHive::Init();
-    Prop myProp("./resources/assets/models/box.shape");
+    Prop myProp("./resources/assets/models/Vivi/0044_player05out.obj");
     Camera myCamera;
     float aux = 0.0f;
 
     while(!glfwWindowShouldClose(BeeHive::Window::window))
     {
-        aux += 0.01f;
+        //aux += 0.01f;
         BeeHive::NewFrame();
         BeeHive::Graphic::defaultShader.use();
         BeeHive::Graphic::defaultShader.setCamera(myCamera);
-        myProp.transform->rotation.head = aux;
+        //myProp.transform->rotation.head = aux;
         myProp.draw();
         BeeHive::Render();
     }
