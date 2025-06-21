@@ -53,8 +53,9 @@ bool BeeHive::Init()
         std::cerr << "Error al inicializar GLEW\n";
         return false;
     }
-
-    glViewport(0, 0, Window::width, Window::height);
+    
+    glfwGetFramebufferSize(Window::window, &Window::frameBufferSizeWidth, &Window::frameBufferSizeHeight);
+    glViewport(0, 0, Window::frameBufferSizeWidth, Window::frameBufferSizeHeight);
     std::cout << "OpenGL iniciado correctamente\nVersion: " << glGetString(GL_VERSION) << std::endl;
     glEnable(GL_DEPTH_TEST);
 

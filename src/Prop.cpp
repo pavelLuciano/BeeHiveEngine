@@ -2,6 +2,7 @@
 #include <BeeHiveEngine.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
+/*/
 Prop::Prop()
 {
     transform = new Transform();
@@ -51,4 +52,4 @@ void Prop::logData()
 {
     ((Mesh*)model)->logData();
     std::cout <<( ((Mesh*)model)-> VAO )<< std::endl;
-}
+}*/

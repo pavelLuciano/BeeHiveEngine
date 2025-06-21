@@ -29,7 +29,7 @@ IMPLOT_SRC = \
 
 GLM_DIR = dependencies/glm
 # Directorios de inclusión
-INCLUDES = -Iinclude -I$(IMGUI_DIR) -I$(IMGUI_DIR)/backends -I$(IMPLOT_DIR) -Iinclude/classes -Iinclude/Interfaces -Iinclude/classes/EntityAtribs -Idependencies
+INCLUDES = -Iinclude -I$(IMGUI_DIR) -I$(IMGUI_DIR)/backends -I$(IMPLOT_DIR) -Iinclude/classes -Iinclude/Interfaces -Iinclude/classes/EntityAtribs -Idependencies -Iextras
 
 # Flags del compilador
 CXXFLAGS = -Wall -std=c++17 $(INCLUDES)

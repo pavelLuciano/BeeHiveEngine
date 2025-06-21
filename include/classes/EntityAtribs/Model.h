@@ -4,11 +4,38 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-
-
 #include <IDrawable.h>
 #include <Mesh.h>
-#include <Model.h>
+
+class Model : public IDrawable
+{
+    public:
+        Model(char *path, bool _gammaCorr = false) : gammaCorrection(_gammaCorr)
+        {
+            loadModel(path);
+        }
+        ~Model();
+        void draw(Shader &shader) const override;
+        void draw() const override;	
+
+        // model data
+        std::vector<Texture> texturesLoaded;
+        std::vector<Mesh> meshes;
+        std::string directory;
+        bool gammaCorrection;
+    private:
+        void loadModel(const std::string& path);
+        void loadBHMModel(const std::string & path);
+        void processNode(aiNode *node, const aiScene *scene);
+        Mesh processMesh(aiMesh *mesh, const aiScene *scene);
+        std::vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
+        unsigned int textureFromFile(const char *path, const std::string &directory, bool gamma = false);
+
+
+        //void loadBHMModel(const std::string & path);
+        std::string eliminarComentario(const std::string& linea);
+};
+/*
 enum ModelType
 {
     LIGHT_MODEL = 0,
@@ -44,6 +71,6 @@ private:
     std::vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
     unsigned int textureFromFile(const char *path, const std::string &directory, bool gamma = false);
 
-};
+};*/
 
 #endif 

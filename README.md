@@ -24,4 +24,26 @@ Clase que representa la transformación de una entidad en el espacio. Cuenta con
 
 WIP
 
+### EJEMPLO
+
+```cpp
+    #include <BeeHiveEngine.h>
+    int main()
+    {
+        BeeHive::Init();
+        /*
+            ...
+        */ 
+        while(!glfwWindowShoulClose(BeeHive::Window::window))
+        {
+            BeeHive::NewFrame();
+            /*
+                ...
+            */
+            BeeHive::Render();
+        }
+        BeeHive::Terminate();
+    }
+```
+
 

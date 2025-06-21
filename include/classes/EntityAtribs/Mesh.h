@@ -5,21 +5,46 @@
 #include <IDrawable.h>
 #include <glm/glm.hpp>
 
-
 #define MAX_BONE_INFLUENCE 4
-struct Vertex
-{
+struct Vertex{
     glm::vec3 position;
     //glm::vec3 color;
     glm::vec3 normal;
-    glm::vec2 textureCoords;
-    //revisar para que sirve esto
-    
+    glm::vec2 texCoords;
     glm::vec3 tangent;
     glm::vec3 bitangent;
 	int m_BoneIDs[MAX_BONE_INFLUENCE];
 	float m_Weights[MAX_BONE_INFLUENCE];
 };
+struct Texture
+{
+    unsigned int id;
+    std::string type;
+    std::string path;
+};
+
+class Mesh : public IDrawable
+{
+public:
+    std::vector<Vertex>       vertices;
+    std::vector<unsigned int> indices;
+    std::vector<Texture>      textures;
+    unsigned int VAO;
+
+    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
+    ~Mesh();
+    void draw() const override;
+    void draw(Shader &shader) const override;
+private:
+    //  render data
+    unsigned int VBO, EBO;
+    void setupMesh();
+};
+
+
+
+/*
+
 struct Texture
 {
     unsigned int id;
@@ -49,5 +74,5 @@ public:
     void draw(Shader&) const override;
 private:
     unsigned int EBO, VBO;
-};
+};*/
 #endif

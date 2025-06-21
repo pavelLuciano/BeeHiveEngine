@@ -58,6 +58,13 @@ namespace BeeHive
     bool Terminate();
     void NewFrame();
     void Render();
+
+    //
+    // WINDOWS
+    //
+    void engineUI();
+    void enityInspector();
+    
 };
 
 #endif

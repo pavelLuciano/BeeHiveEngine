@@ -5,9 +5,12 @@
 Camera::Camera()
 {
     projection = PERSPECTIVE;
-    FOV = 60.0f;
-    transform = new Transform();
-    transform->TranslateZTo(-10.0f);
+    FOV        = 60.0f;
+    up         = glm::vec3(0.0f, 1.0f, 0.0f);
+    front      = glm::vec3(0.0f, 0.0f, -1.0f);
+    transform  = new Transform();
+
+    transform->TranslateZTo(-15.0f);
     std::cout <<"["<< entityID <<"] " << "Camera Creada" << std::endl;
 }
 Camera::~Camera()
@@ -27,9 +30,12 @@ glm::mat4 Camera::getProjection()
 {
     //TODO: ajustar las medidas del viewport
     if (projection == ORTHOGRAPHIC) return glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, 0.1f, 100.0f);
-    else return glm::perspective(glm::radians(FOV), 600.0f / 600.0f, 0.1f, 100.0f);
+    else return glm::perspective(glm::radians(FOV),
+                                 (float) BeeHive::Window::frameBufferSizeWidth / (float) BeeHive::Window::frameBufferSizeHeight, 
+                                 0.1f,
+                                 100.0f);
 }
 glm::mat4 Camera::getView()
 {
-    return glm::lookAt(transform->pos, glm::vec3(0,0,0), glm::vec3(0,1,0));
+    return glm::lookAt(transform->pos, glm::vec3(0.0f) , glm::vec3(0,1,0));
 }

@@ -1,21 +1,35 @@
 #include <BeeHiveEngine.h>
-#include <Mesh.h>
 #include <Model.h>
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
+Model::~Model()
+{
 
+}
+void Model::draw(Shader& shader) const
+{
+    for (unsigned int i = 0; i < meshes.size(); i++)
+        meshes[i].draw(shader);
+};
 void Model::draw() const
 {
+    BeeHive::Graphic::defaultShader.use();
     draw(BeeHive::Graphic::defaultShader);
 }
-void Model::draw(Shader& _shader) const
-{
-    for (unsigned int i = 0; i < meshes.size(); i++) meshes[i].draw(_shader);
-}
+
 void Model::loadModel(const std::string& path)
 {
+    //read .bhm file
+    if(path.find(".bhm")!=std::string::npos)
+    {
+
+    }
+
     // read file via ASSIMP
     Assimp::Importer importer;
     const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
@@ -27,14 +41,12 @@ void Model::loadModel(const std::string& path)
     }
     // retrieve the directory path of the filepath
     directory = path.substr(0, path.find_last_of('/'));
-
     // process ASSIMP's root node recursively
     processNode(scene->mRootNode, scene);
-
 }
+
 void Model::processNode(aiNode *node, const aiScene *scene)
-{
-    // process each mesh located at the current node
+{        // process each mesh located at the current node
     for(unsigned int i = 0; i < node->mNumMeshes; i++)
     {
         // the node object only contains indices to index the actual objects in the scene. 
@@ -49,6 +61,7 @@ void Model::processNode(aiNode *node, const aiScene *scene)
     }
 
 }
+
 Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
 {
     // data to fill
@@ -82,12 +95,12 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
             // use models where a vertex can have multiple texture coordinates so we always take the first set (0).
             vec.x = mesh->mTextureCoords[0][i].x; 
             vec.y = mesh->mTextureCoords[0][i].y;
-            vertex.textureCoords = vec;
+            vertex.texCoords = vec;
             // tangent
             vector.x = mesh->mTangents[i].x;
             vector.y = mesh->mTangents[i].y;
             vector.z = mesh->mTangents[i].z;
-            vertex.textureCoords = vector;
+            vertex.tangent = vector;
             // bitangent
             vector.x = mesh->mBitangents[i].x;
             vector.y = mesh->mBitangents[i].y;
@@ -95,7 +108,7 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
             vertex.bitangent = vector;
         }
         else
-            vertex.textureCoords = glm::vec2(0.0f, 0.0f);
+            vertex.texCoords = glm::vec2(0.0f, 0.0f);
 
         vertices.push_back(vertex);
     }
@@ -132,6 +145,9 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
     // return a mesh object created from the extracted mesh data
     return Mesh(vertices, indices, textures);
 }
+
+// checks all material textures of a given type and loads the textures if they're not loaded yet.
+// the required info is returned as a Texture struct.
 std::vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
 {
     std::vector<Texture> textures;
@@ -161,9 +177,7 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType 
         }
     }
     return textures;
-
 }
-
 unsigned int Model::textureFromFile(const char *path, const std::string &directory, bool gamma)
 {
     std::string filename = std::string(path);
@@ -202,4 +216,31 @@ unsigned int Model::textureFromFile(const char *path, const std::string &directo
     }
 
     return textureID;
+}
+
+std::string eliminarComentario(const std::string& linea) {
+    size_t pos = linea.find('#');
+    if (pos != std::string::npos) {
+        return linea.substr(0, pos);  // Retorna solo la parte antes del '#'
+    }
+    return linea;
+}
+
+void Model::loadBHMModel(const std::string& path)
+{
+    std::vector<Vertex> vertices;
+    std::vector<unsigned int> indices;
+    std::vector<Texture> textures;
+    std::ifstream archivo(path);
+    std::string linea;
+    if (!archivo)
+    {
+        std::cerr << "No se pudo abrir el modelo." << std::endl;
+        return;
+    }
+    while (std::getline(archivo, linea))
+    {
+        //std::string limpia = eliminarComentario(linea);
+
+    }
 }
