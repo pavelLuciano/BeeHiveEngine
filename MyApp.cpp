@@ -13,9 +13,9 @@
 int main(int argc, char** argv)
 {
     BeeHive::Init();
-    //Prop myProp("./resources/assets/models/Vivi/0044_player05out.obj");
+    Prop myProp(PENGUIN);
     Camera myCamera;
-    float aux = 0.0f;
+    float aux = 0.05f;
 
     std::vector<Vertex> vert =
     {
@@ -38,26 +38,16 @@ int main(int argc, char** argv)
     Mesh mymesh( vert, ind, tex );
 
 
-
-    Model mod(PENGUIN);
-
-    std::cout << mod.meshes.size() << std::endl;
-    std::cout << mod.texturesLoaded.size() << std::endl;
+    myProp.transform->TranslateTo(glm::vec3(0,-4,0));
+    myProp.transform->scaleAll(glm::vec3(10.0f, 10.0f, 10.0f));
 
     while(!glfwWindowShouldClose(BeeHive::Window::window))
     {
-        aux+= 0.05f;
         BeeHive::NewFrame();
         BeeHive::Graphic::defaultShader.use();
         BeeHive::Graphic::defaultShader.setCamera(myCamera);
-        glm::mat4 miMat(1.0f);
-        miMat = glm::translate(miMat, glm::vec3(0,-3,0));
-        //miMat = glm::rotate(miMat, (float)M_PI , glm::vec3(1,0,0));
-        miMat = glm::rotate(miMat, aux, glm::vec3(0,1,0));
-        miMat = glm::scale(miMat, glm::vec3(5.0f, 5.0f, 5.0f));
-        BeeHive::Graphic::defaultShader.setMat4("model", miMat);
-        //mymesh.draw(BeeHive::Graphic::defaultShader);
-        mod.draw(BeeHive::Graphic::defaultShader);
+        myProp.transform->eulerRotateY_Global(aux);
+        myProp.draw(BeeHive::Graphic::defaultShader);
         BeeHive::Render();
     }
     BeeHive::Terminate();

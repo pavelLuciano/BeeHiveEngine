@@ -26,6 +26,9 @@ GLFWwindow* BeeHive::Window::window = NULL;
 //GRAPHIC
 Shader BeeHive::Graphic::defaultShader;
 
+//ENGINE
+std::vector<Entity*> BeeHive::Engine::entity_list{};
+
 //Funciones generales
 bool BeeHive::Init()
 { 
@@ -122,4 +125,13 @@ void BeeHive::Render()
     glViewport(0, 0, Window::frameBufferSizeWidth, Window::frameBufferSizeHeight);
     //ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     glfwSwapBuffers(Window::window);
+}
+
+void BeeHive::addEntity(Entity* entity)
+{
+    Engine::entity_list.push_back(entity);
+}
+void BeeHive::addEntity(Entity& entity)
+{
+    Engine::entity_list.push_back(&entity);
 }

@@ -12,5 +12,6 @@ private:
     static unsigned int entityIDCount;
 public:
     unsigned int entityID;
+    virtual void update() {};
 };
 #endif

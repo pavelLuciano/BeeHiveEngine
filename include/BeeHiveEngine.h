@@ -8,6 +8,7 @@
 #include <imgui.h>
 #include <implot.h>
 
+#include <Camera.h>
 #include <Shader.h>
 
 #define DEFAULT_FRAGMENT_SHADER "./resources/shaders/defaultFragment.glsl"
@@ -53,11 +54,21 @@ namespace BeeHive
         static Shader defaultShader;
     };
 
+    class Engine
+    {
+    public:
+        static std::vector<Entity*> entity_list;
+    };
+    
+    
     //Funciones que manejan el motor 
     bool Init();
     bool Terminate();
     void NewFrame();
     void Render();
+
+    void addEntity(Entity*);
+    void addEntity(Entity&);
 
     //
     // WINDOWS

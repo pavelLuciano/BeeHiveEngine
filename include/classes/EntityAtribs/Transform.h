@@ -24,6 +24,9 @@ public:
     void TranslateXTo(float);
     void TranslateYTo(float);
     void TranslateZTo(float);
+    void setPitch(float);
+    void setHead(float);
+    void setRoll(float);
     void eulerRotateX_Global(float);
     void eulerRotateY_Global(float);
     void eulerRoteteZ_Global(float);

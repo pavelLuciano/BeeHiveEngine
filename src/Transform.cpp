@@ -27,18 +27,12 @@ void Transform::scaleX(float _sx)               { scale = glm::vec3(_sx, scale.y
 void Transform::scaleY(float _sy)               { scale = glm::vec3(scale.x, _sy, scale.z);}
 void Transform::scaleZ(float _sz)               { scale = glm::vec3(scale.x, scale.y, _sz);}
 
-void Transform::eulerRotateX_Global(float)
-{
-
-}
-void Transform::eulerRotateY_Global(float)
-{
-
-}
-void Transform::eulerRoteteZ_Global(float)
-{
-
-}
+void Transform::setPitch(float _pitch)          { rotation.pitch = _pitch;  }
+void Transform::setHead(float _head)            { rotation.head  = _head;   }
+void Transform::setRoll(float _roll)            { rotation.roll  = _roll;   }
+void Transform::eulerRotateX_Global(float _angle) {rotation.pitch += _angle;}
+void Transform::eulerRotateY_Global(float _angle) {rotation.head += _angle; }
+void Transform::eulerRoteteZ_Global(float _angle) {rotation.roll += _angle; }
 void Transform::eulerRotateX_Local(float)
 {
 

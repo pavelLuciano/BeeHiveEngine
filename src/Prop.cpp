@@ -2,7 +2,7 @@
 #include <BeeHiveEngine.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
-/*/
+
 Prop::Prop()
 {
     transform = new Transform();
@@ -44,12 +44,13 @@ void Prop::draw(Shader& shader) const
     transMatrix = glm::rotate(transMatrix, transform->rotation.pitch, glm::vec3(1,0,0));
     transMatrix = glm::rotate(transMatrix, transform->rotation.roll, glm::vec3(0,0,1));
     //sclae
+    transMatrix = glm::scale(transMatrix, transform->scale);
     shader.setMat4("model", transMatrix);
     model->draw(shader);
 }
 
 void Prop::logData()
 {
-    ((Mesh*)model)->logData();
-    std::cout <<( ((Mesh*)model)-> VAO )<< std::endl;
-}*/
+    //((Mesh*)model)->logData();
+    //std::cout <<( ((Mesh*)model)-> VAO )<< std::endl;
+}

@@ -10,7 +10,7 @@
 class Model : public IDrawable
 {
     public:
-        Model(char *path, bool _gammaCorr = false) : gammaCorrection(_gammaCorr)
+        Model(const std::string& path, bool _gammaCorr = false) : gammaCorrection(_gammaCorr)
         {
             loadModel(path);
         }
