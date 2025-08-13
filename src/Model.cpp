@@ -18,7 +18,6 @@ void Model::draw(Shader& shader) const
 };
 void Model::draw() const
 {
-    BeeHive::Graphic::defaultShader.use();
     draw(BeeHive::Graphic::defaultShader);
 }
 

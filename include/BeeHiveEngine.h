@@ -10,9 +10,14 @@
 
 #include <Camera.h>
 #include <Shader.h>
+#include <Prop.h>
+#include <IDrawable.h>
 
-#define DEFAULT_FRAGMENT_SHADER "./resources/shaders/defaultFragment.glsl"
-#define DEFAULT_VERTEX_SHADER   "./resources/shaders/defaultVertex.glsl"
+#include <unordered_map>
+#include <memory>
+
+using Prop_sptr   = std::shared_ptr<Prop>;
+using Entity_sptr = std::shared_ptr<Entity>;
 
 namespace BeeHive
 {
@@ -41,6 +46,12 @@ namespace BeeHive
         static int frameBufferSizeWidth;
         static int frameBufferSizeHeight;
         static GLFWwindow* window;
+
+        Window()                         = delete;
+        Window(const Window&)            = delete;
+        Window(Window&&)                 = delete;
+        Window& operator=(const Window&) = delete;
+        Window& operator=(Window&&)      = delete;
     };
     
     class Input
@@ -51,13 +62,22 @@ namespace BeeHive
     class Graphic
     {
     public:
+        Graphic()                          = delete;
+        Graphic(const Graphic&)            = delete;
+        Graphic(Graphic&&)                 = delete;
+        Graphic& operator=(const Graphic&) = delete;
+        Graphic& operator=(Graphic&&)      = delete;
+
         static Shader defaultShader;
+        static std::unordered_map<Shader*, std::vector<std::shared_ptr<IDrawable>>> drawable_map;
+        static void drawIDrawables();
     };
 
     class Engine
     {
     public:
-        static std::vector<Entity*> entity_list;
+        static std::vector<std::shared_ptr<Entity>> entity_list;
+        static void updateEntities();
     };
     
     
@@ -67,9 +87,27 @@ namespace BeeHive
     void NewFrame();
     void Render();
 
-    void addEntity(Entity*);
-    void addEntity(Entity&);
-
+    template <typename T, typename... Args>
+    std::shared_ptr<T> createEntity(Args&&... args)
+    {
+        static_assert(std::is_base_of_v<Entity, T>, "Create Entity solo puede crear instancias de \"Entity\" o heredadas");
+        // Buscar si alguno de los argumentos es un Shader
+        Shader* shader = &Graphic::defaultShader;
+        ([&] {
+            if constexpr (std::is_same_v<std::decay_t<Args>, Shader*>) {
+                shader = args;
+            }
+        }(), ...); // fold expression
+        
+        auto newEntity = std::make_shared<T>(std::forward<Args>(args)...);
+        if constexpr(std::is_base_of_v<IDrawable, T>)
+        {
+            Graphic::drawable_map[shader].push_back(std::static_pointer_cast<IDrawable>(newEntity));
+        }
+        Engine::entity_list.push_back(std::static_pointer_cast<Entity>(newEntity));
+        return newEntity;
+    }
+    
     //
     // WINDOWS
     //

@@ -4,14 +4,12 @@
 //atributes
 #include <Transform.h>
 #include <Model.h>
-//interfaces
-#include <IDrawable.h>
 
-class Prop: Entity, IDrawable
+class Prop: public Entity, public IDrawable
 {
 public:
     Transform* transform;
-    IDrawable* model;
+    Model* model;
     Prop();
     Prop(const std::string&);
     ~Prop();

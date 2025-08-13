@@ -1,4 +1,5 @@
 #include <Entity.h>
+#include <BeeHiveEngine.h>
 #include <iostream>
 
 unsigned int Entity::entityIDCount = 0x0;

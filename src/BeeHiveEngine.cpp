@@ -25,9 +25,22 @@ GLFWwindow* BeeHive::Window::window = NULL;
 
 //GRAPHIC
 Shader BeeHive::Graphic::defaultShader;
+std::unordered_map<Shader*, std::vector<std::shared_ptr<IDrawable>>> BeeHive::Graphic::drawable_map{};
+void BeeHive::Graphic::drawIDrawables()
+{
+    for(auto [shader, drawables]: drawable_map)
+    {
+        shader->use();
+        for (auto& drawable: drawables) drawable->draw(*shader);
+    }
+}
 
 //ENGINE
-std::vector<Entity*> BeeHive::Engine::entity_list{};
+std::vector<Entity_sptr> BeeHive::Engine::entity_list{};
+void BeeHive::Engine::updateEntities()
+{
+    for (auto& e: entity_list) e->update();
+}
 
 //Funciones generales
 bool BeeHive::Init()
@@ -87,9 +100,6 @@ bool BeeHive::Init()
     ImGui_ImplGlfw_InitForOpenGL(Window::window, true);
     ImGui_ImplOpenGL3_Init();
 
-
-    //std::cout << Window::window << std::endl;
-
     return true;
 }
 bool BeeHive::Terminate()
@@ -108,6 +118,7 @@ void BeeHive::NewFrame()
     Clock::tick();
     glfwPollEvents();
 
+
     glClearColor(0.0f, 0.2f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     /*
@@ -120,18 +131,10 @@ void BeeHive::NewFrame()
 
 void BeeHive::Render()
 {
-    //ImGui::Render();
+    Engine::updateEntities();
+    Graphic::drawIDrawables();
     glfwGetFramebufferSize(Window::window, &Window::frameBufferSizeWidth, &Window::frameBufferSizeHeight);
     glViewport(0, 0, Window::frameBufferSizeWidth, Window::frameBufferSizeHeight);
     //ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     glfwSwapBuffers(Window::window);
-}
-
-void BeeHive::addEntity(Entity* entity)
-{
-    Engine::entity_list.push_back(entity);
-}
-void BeeHive::addEntity(Entity& entity)
-{
-    Engine::entity_list.push_back(&entity);
 }
