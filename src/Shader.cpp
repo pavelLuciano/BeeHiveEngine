@@ -182,3 +182,8 @@ void Shader::setCamera(Camera& _cam)
     setMat4("projection", _cam.getProjection());
     setMat4("view",       _cam.getView());
 }
+void Shader::setCamera(Camera* _cam)
+{
+    setMat4("projection", _cam->getProjection());
+    setMat4("view",       _cam->getView());
+}

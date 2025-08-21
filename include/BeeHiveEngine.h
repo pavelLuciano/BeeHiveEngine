@@ -16,8 +16,10 @@
 #include <unordered_map>
 #include <memory>
 
-using Prop_sptr   = std::shared_ptr<Prop>;
-using Entity_sptr = std::shared_ptr<Entity>;
+using Prop_ptr   = std::shared_ptr<Prop>;
+using Entity_ptr = std::shared_ptr<Entity>;
+using Camera_ptr = std::shared_ptr<Camera>;
+using Shader_ptr = std::shared_ptr<Shader>;
 
 namespace BeeHive
 {
@@ -56,7 +58,17 @@ namespace BeeHive
     
     class Input
     {
-
+    public:
+        class Mouse
+        {
+        public:
+            static glm::vec2 lastPos;
+            static glm::vec2 offset;
+            static bool firstMouse;
+            static bool newOffset;
+            static void mouseCallback(GLFWwindow*, double, double);
+            static void updateOffset();
+        };
     };
 
     class Graphic
@@ -68,9 +80,16 @@ namespace BeeHive
         Graphic& operator=(const Graphic&) = delete;
         Graphic& operator=(Graphic&&)      = delete;
 
+        static Camera* currentCamera;
         static Shader defaultShader;
         static std::unordered_map<Shader*, std::vector<std::shared_ptr<IDrawable>>> drawable_map;
         static void drawIDrawables();
+        static void setCurrentCamera(Camera*);
+        template <typename T>
+        static void bindShader(std::shared_ptr<T> entity, Shader* shader = &defaultShader) {
+            if constexpr (std::is_base_of_v<IDrawable, T>)
+                Graphic::drawable_map[shader].push_back(std::static_pointer_cast<IDrawable>(entity));
+        }
     };
 
     class Engine
@@ -91,22 +110,11 @@ namespace BeeHive
     std::shared_ptr<T> createEntity(Args&&... args)
     {
         static_assert(std::is_base_of_v<Entity, T>, "Create Entity solo puede crear instancias de \"Entity\" o heredadas");
-        // Buscar si alguno de los argumentos es un Shader
-        Shader* shader = &Graphic::defaultShader;
-        ([&] {
-            if constexpr (std::is_same_v<std::decay_t<Args>, Shader*>) {
-                shader = args;
-            }
-        }(), ...); // fold expression
-        
         auto newEntity = std::make_shared<T>(std::forward<Args>(args)...);
-        if constexpr(std::is_base_of_v<IDrawable, T>)
-        {
-            Graphic::drawable_map[shader].push_back(std::static_pointer_cast<IDrawable>(newEntity));
-        }
         Engine::entity_list.push_back(std::static_pointer_cast<Entity>(newEntity));
         return newEntity;
     }
+
     
     //
     // WINDOWS

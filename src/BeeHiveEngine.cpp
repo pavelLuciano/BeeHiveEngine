@@ -22,21 +22,54 @@ int BeeHive::Window::frameBufferSizeHeight = 0;
 GLFWwindow* BeeHive::Window::window = NULL;
 
 //INPUT
+glm::vec2 BeeHive::Input::Mouse::lastPos = {0.0f, 0.0f};
+glm::vec2 BeeHive::Input::Mouse::offset  = {0.0f, 0.0f}; 
+bool BeeHive::Input::Mouse::firstMouse   = true;
+bool BeeHive::Input::Mouse::newOffset    = false;
+void BeeHive::Input::Mouse::updateOffset()
+{
+    if (!newOffset)
+    {
+        BeeHive::Input::Mouse::offset = {0.0f, 0.0f};
+        newOffset = false;
+    }
+}
+void BeeHive::Input::Mouse::mouseCallback(GLFWwindow* _win, double xposIn, double yposIn)
+{
+    glm::vec2 newPos = {
+        static_cast<float>(xposIn),
+        static_cast<float>(yposIn)
+    };
+    if (firstMouse)
+    {
+        lastPos = newPos;
+        firstMouse = false;
+    }
+    offset = newPos - lastPos;
+    lastPos = newPos;
+    newOffset = true;
+}
 
 //GRAPHIC
 Shader BeeHive::Graphic::defaultShader;
+Camera* BeeHive::Graphic::currentCamera = NULL;
 std::unordered_map<Shader*, std::vector<std::shared_ptr<IDrawable>>> BeeHive::Graphic::drawable_map{};
 void BeeHive::Graphic::drawIDrawables()
 {
     for(auto [shader, drawables]: drawable_map)
     {
         shader->use();
+        shader->setCamera(BeeHive::Graphic::currentCamera);
         for (auto& drawable: drawables) drawable->draw(*shader);
     }
 }
+void BeeHive::Graphic::setCurrentCamera(Camera* cam_)
+{
+    BeeHive::Graphic::currentCamera = cam_;
+}
 
 //ENGINE
-std::vector<Entity_sptr> BeeHive::Engine::entity_list{};
+std::vector<Entity_ptr> BeeHive::Engine::entity_list{};
 void BeeHive::Engine::updateEntities()
 {
     for (auto& e: entity_list) e->update();
@@ -117,7 +150,8 @@ void BeeHive::NewFrame()
 {
     Clock::tick();
     glfwPollEvents();
-
+    
+    Input::Mouse::updateOffset();
 
     glClearColor(0.0f, 0.2f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -128,7 +162,6 @@ void BeeHive::NewFrame()
         continue;
     }*/
 }
-
 void BeeHive::Render()
 {
     Engine::updateEntities();

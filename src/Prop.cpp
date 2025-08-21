@@ -39,13 +39,11 @@ void Prop::draw() const
 }
 void Prop::draw(Shader& _shader) const
 {
-    glm::mat4 transMatrix = glm::mat4(1.0f);
-    transMatrix = glm::translate(transMatrix, transform->pos);
-    transMatrix = glm::rotate(transMatrix, transform->rotation.head, glm::vec3(0,1,0));
-    transMatrix = glm::rotate(transMatrix, transform->rotation.pitch, glm::vec3(1,0,0));
-    transMatrix = glm::rotate(transMatrix, transform->rotation.roll, glm::vec3(0,0,1));
-    transMatrix = glm::scale(transMatrix, transform->scale);
-    _shader.setMat4("model", transMatrix);
+    glm::mat4 transformMatrix = glm::mat4(1.0f);
+    transformMatrix = glm::translate(transformMatrix, transform->pos);
+    transformMatrix *= transform->getRotationMatrix();
+    transformMatrix = glm::scale(transformMatrix, transform->scale);
+    _shader.setMat4("model", transformMatrix);
     model->draw();
 }
 

@@ -27,19 +27,25 @@ public:
     void setPitch(float);
     void setHead(float);
     void setRoll(float);
-    void eulerRotateX_Global(float);
-    void eulerRotateY_Global(float);
-    void eulerRoteteZ_Global(float);
-    void eulerRotateX_Local(float);
-    void eulerRotateY_Local(float);
-    void eulerRotateZ_Local(float);
+    void rotateX_Global(float);
+    void rotateY_Global(float);
+    void roteteZ_Global(float);
+    void rotateX_Local(float);
+    void rotateY_Local(float);
+    void rotateZ_Local(float);
     void scaleAll(glm::vec3);
     void scaleX(float);
     void scaleY(float);
     void scaleZ(float);
 
+    glm::vec3 getLocalXAxis();
+    glm::vec3 getLocalYAxis();
+    glm::vec3 getLocalZAxis();
+
     void updateAxles();
     void updateRotationValues();
+
+    glm::mat4 getRotationMatrix();
 
 };
 #endif
