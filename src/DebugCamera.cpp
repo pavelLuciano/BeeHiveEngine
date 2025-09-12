@@ -26,10 +26,15 @@ void DebugCamera::update()
         transform->Translate(translation);
     }
 
-    float sensitivity = 0.15f;
+    float sensitivity = 0.2f;
     glm::vec2 _offset = BeeHive::Input::Mouse::offset;
     _offset *= sensitivity;
-    
-    transform->rotateX_Local(_offset[1]);
-    transform->rotateAround(-_offset[0], glm::vec3(0.0f, 1.0f, 0.0f));
+
+    if(BeeHive::Input::Mouse::isLeftButton_Pressed) 
+    {
+        glfwSetInputMode(BeeHive::Window::window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+        transform->rotateX_Local(-_offset[1]);
+        transform->rotateAround(-_offset[0], glm::vec3(0.0f, 1.0f, 0.0f));
+    }
+    else glfwSetInputMode(BeeHive::Window::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 }

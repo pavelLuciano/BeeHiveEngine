@@ -3,3 +3,5 @@
 /resources/assets/models
 imgui.ini
 /extras
+/demos/bin/app
+demos/.vscode

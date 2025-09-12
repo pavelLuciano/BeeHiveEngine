@@ -67,7 +67,11 @@ namespace BeeHive
             static glm::vec2 offset;
             static bool firstMouse;
             static bool newOffset;
+            static bool isLeftButton_Pressed;
+            static bool isRightButton_Pressed;
+
             static void mouseCallback(GLFWwindow*, double, double);
+            static void mouseButtonCallback(GLFWwindow*, int, int, int);
             static void updateOffset();
         };
     };

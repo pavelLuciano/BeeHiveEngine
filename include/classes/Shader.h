@@ -7,8 +7,10 @@
 
 #include <Camera.h>
 
-#define DEFAULT_FRAGMENT_SHADER "/home/pavel/Dev/BeeHiveEngine/resources/shaders/defaultFragment.glsl"
-#define DEFAULT_VERTEX_SHADER   "/home/pavel/Dev/BeeHiveEngine/resources/shaders/defaultVertex.glsl"
+#define DEFAULT_FRAGMENT_SHADER "../resources/shaders/defaultFragment.glsl"
+#define DEFAULT_VERTEX_SHADER   "../resources/shaders/defaultVertex.glsl"
+
+
 class Shader
 {
 public:

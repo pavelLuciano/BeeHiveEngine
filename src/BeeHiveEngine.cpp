@@ -26,6 +26,9 @@ glm::vec2 BeeHive::Input::Mouse::lastPos = {0.0f, 0.0f};
 glm::vec2 BeeHive::Input::Mouse::offset  = {0.0f, 0.0f}; 
 bool BeeHive::Input::Mouse::firstMouse   = true;
 bool BeeHive::Input::Mouse::newOffset    = false;
+bool BeeHive::Input::Mouse::isRightButton_Pressed = false;
+bool BeeHive::Input::Mouse::isLeftButton_Pressed = false;
+
 void BeeHive::Input::Mouse::updateOffset()
 {
     if (!newOffset)
@@ -47,6 +50,29 @@ void BeeHive::Input::Mouse::mouseCallback(GLFWwindow* _win, double xposIn, doubl
     lastPos = newPos;
     newOffset = true;
 }
+void BeeHive::Input::Mouse::mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+{
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+    {
+        isLeftButton_Pressed = true;
+    }
+    else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
+    {
+        isLeftButton_Pressed = false;
+    }
+
+    if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
+    {
+        isRightButton_Pressed = true;
+    }
+    else if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE)
+    {
+        isRightButton_Pressed = false;
+    }
+
+}
+
+
 
 //GRAPHIC
 Shader BeeHive::Graphic::defaultShader;
@@ -91,6 +117,7 @@ bool BeeHive::Init()
     glfwSwapInterval(1);
     //glfwSetFramebufferSizeCallback(window.self, framebuffer_size_callback);
     glfwSetCursorPosCallback(Window::window, Input::Mouse::mouseCallback);
+    glfwSetMouseButtonCallback(Window::window, Input::Mouse::mouseButtonCallback);
     //glfwSetScrollCallback(window.self, scroll_callback);
     // tell GLFW to capture our mouse
     glfwSetInputMode(Window::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
