@@ -9,15 +9,12 @@ enum Projection
     PERSPECTIVE,
     ORTHOGRAPHIC
 };
-class Camera: Entity
+class Camera: public Entity
 {
 public:
     Transform* transform;
     Projection projection;
     float FOV;
-
-    glm::vec3 up;
-    glm::vec3 front;
 
     Camera();
     ~Camera();

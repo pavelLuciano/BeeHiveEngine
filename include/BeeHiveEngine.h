@@ -9,6 +9,7 @@
 #include <implot.h>
 
 #include <Camera.h>
+#include <DebugCamera.h>
 #include <Shader.h>
 #include <Prop.h>
 #include <IDrawable.h>

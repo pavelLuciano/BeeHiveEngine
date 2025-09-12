@@ -29,10 +29,8 @@ bool BeeHive::Input::Mouse::newOffset    = false;
 void BeeHive::Input::Mouse::updateOffset()
 {
     if (!newOffset)
-    {
         BeeHive::Input::Mouse::offset = {0.0f, 0.0f};
-        newOffset = false;
-    }
+    newOffset = false;
 }
 void BeeHive::Input::Mouse::mouseCallback(GLFWwindow* _win, double xposIn, double yposIn)
 {
@@ -92,7 +90,7 @@ bool BeeHive::Init()
     glfwMakeContextCurrent(Window::window);
     glfwSwapInterval(1);
     //glfwSetFramebufferSizeCallback(window.self, framebuffer_size_callback);
-    //glfwSetCursorPosCallback(window.self, mouse_callback);
+    glfwSetCursorPosCallback(Window::window, Input::Mouse::mouseCallback);
     //glfwSetScrollCallback(window.self, scroll_callback);
     // tell GLFW to capture our mouse
     glfwSetInputMode(Window::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);

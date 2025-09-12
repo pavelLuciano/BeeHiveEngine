@@ -33,6 +33,7 @@ public:
     void rotateX_Local(float);
     void rotateY_Local(float);
     void rotateZ_Local(float);
+    void rotateAround(float, glm::vec3);
     void scaleAll(glm::vec3);
     void scaleX(float);
     void scaleY(float);
@@ -46,6 +47,5 @@ public:
     void updateRotationValues();
 
     glm::mat4 getRotationMatrix();
-
 };
 #endif

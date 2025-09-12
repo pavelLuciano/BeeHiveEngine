@@ -5,6 +5,7 @@
 
 class DebugCamera:  public Camera
 {
+public:
     virtual void update() override;
 };
 

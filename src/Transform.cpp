@@ -52,6 +52,13 @@ void Transform::rotateZ_Local(float _angle)
     zAxis_Local = glm::rotate(zAxis_Local, glm::radians(_angle), zAxis_Local);
 }
 
+void Transform::rotateAround(float _angle, glm::vec3 _vec)
+{
+    xAxis_Local = glm::rotate(xAxis_Local, glm::radians(_angle), _vec);
+    yAxis_Local = glm::rotate(yAxis_Local, glm::radians(_angle), _vec);
+    zAxis_Local = glm::rotate(zAxis_Local, glm::radians(_angle), _vec);
+}
+
 glm::vec3 Transform::getLocalXAxis() {return xAxis_Local;};
 glm::vec3 Transform::getLocalYAxis() {return yAxis_Local;};
 glm::vec3 Transform::getLocalZAxis() {return zAxis_Local;};

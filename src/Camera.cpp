@@ -6,11 +6,9 @@ Camera::Camera()
 {
     projection = PERSPECTIVE;
     FOV        = 60.0f;
-    up         = glm::vec3(0.0f, 1.0f, 0.0f);
-    front      = glm::vec3(0.0f, 0.0f, -1.0f);
     transform  = new Transform();
 
-    transform->TranslateZTo(-15.0f);
+    transform->TranslateZTo(15.0f);
     std::cout <<"["<< entityID <<"] " << "Camera Creada" << std::endl;
 }
 Camera::~Camera()
@@ -37,5 +35,5 @@ glm::mat4 Camera::getProjection()
 }
 glm::mat4 Camera::getView()
 {
-    return glm::lookAt(transform->pos, glm::vec3(0.0f) , glm::vec3(0,1,0));
+    return glm::lookAt(transform->pos, transform->pos - transform->getLocalZAxis(), glm::vec3(0.0f, 1.0f, 0.0f));
 }

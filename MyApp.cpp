@@ -22,7 +22,7 @@ int main(int argc, char** argv)
     float aux = 5.0f;
     //miProp->transform->TranslateYTo(-7.0f);
     //miProp->transform->eulerRotateX_Global(3.14f);
-    miProp->transform->scaleAll({2.0f, 2.0f, 2.0f});
+    miProp->transform->scaleAll({3.0f, 3.0f, 3.0f});
     while(!glfwWindowShouldClose(BeeHive::Window::window))
     {
         BeeHive::NewFrame();
