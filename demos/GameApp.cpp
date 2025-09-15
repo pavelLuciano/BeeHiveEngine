@@ -6,6 +6,8 @@ int main()
     //
     GameMaster game;
     DebugCamera miCam;
+    miCam.transform->TranslateTo({0.0f, 15.0f, 0.0f});
+    miCam.transform->rotateX_Local(-90.0f);
     BeeHive::Graphic::setCurrentCamera(&miCam);
     game.startGame();
 
@@ -15,6 +17,13 @@ int main()
         BeeHive::NewFrame();
         ///
         
+
+
+
+
+
+
+
         ///
         miCam.update();
         
